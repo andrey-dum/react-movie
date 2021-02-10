@@ -4,19 +4,24 @@ import Filters from './components/Filters/Filters';
 import MovieList from './components/Movies/MovieList';
 
 const filtersData = {
-  sort_by: 'popularity.asc',
+  sort_by: 'popularity.desc',
 }
 
 
 function App() {
   const [filters, setFilters] = useState(filtersData);
+  const [page, setPage] = useState(1);
 
   const changeFilterHandler = (e) => {
-    console.log(e.target.name, e.target.value);
     setFilters({
       ...filters, 
       [e.target.name]: e.target.value 
     })
+    setPage(1)
+  }
+
+  const onChangePage = (page) => {
+    setPage(page)
   }
   
 
@@ -27,12 +32,20 @@ function App() {
           <div className="card" style={{width: '100%'}}>
             <div className="card-body">
               <h3>Фильтры:</h3>
-              <Filters filters={filters} changeFilterHandler={changeFilterHandler}/>
+              <Filters 
+                filters={filters} 
+                changeFilterHandler={changeFilterHandler}
+                page={page}
+                onChangePage={onChangePage}
+              />
             </div>
           </div>
         </div>
         <div className="col-8">
-          <MovieList filters={filters} />
+          <MovieList 
+            filters={filters} 
+            page={page}
+          />
         </div>
       </div>
     </div>

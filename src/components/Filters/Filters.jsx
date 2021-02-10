@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Filters = ({filters, changeFilterHandler}) => {
+const Filters = ({filters, changeFilterHandler, onChangePage, page}) => {
     return (
         <form className="mb-3">
             <div className="form-group">
@@ -17,6 +17,24 @@ const Filters = ({filters, changeFilterHandler}) => {
                     <option value="vote_average.desc">Рейтинг по убыванию</option>
                     <option value="vote_average.desc">Рейтинг по возростанию</option>
                 </select>
+            </div>
+
+
+            <div className="btn-group">
+                <button 
+                    type="button" 
+                    className="btn btn-light"
+                    disabled={page === 1}
+                    onClick={() => onChangePage(page - 1)}
+                >Назад</button>
+                <button 
+                    type="button" 
+                    className="btn btn-light" 
+                    onClick={() => onChangePage(page + 1)}
+                >Вперед</button>
+            </div>
+            <div>
+                Страница: {page}
             </div>
 
         </form>
