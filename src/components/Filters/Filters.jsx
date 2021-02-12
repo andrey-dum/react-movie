@@ -1,41 +1,39 @@
 import React from 'react'
+import Genres from './Genres'
+import Pagination from './Pagination'
+import PrimaryReleaseYear from './PrimaryReleaseYear'
+import SortBy from './SortBy'
 
-const Filters = ({filters, changeFilterHandler, onChangePage, page}) => {
+const Filters = ({
+    filters: {sort_by, primary_release_year}, 
+    changeFilterHandler, 
+    onChangePage, 
+    page, 
+    total_pages,
+    onChangeGenre
+}) => {
+
     return (
         <form className="mb-3">
-            <div className="form-group">
-                <label htmlFor="sort_by">Сортировать по:</label>
-                <select 
-                    className="form-control" 
-                    id="sort_by" 
-                    name="sort_by"
-                    value={filters.sort_by}
-                    onChange={changeFilterHandler}
-                >
-                    <option value="popularity.desc">Популярное по убыванию</option>
-                    <option value="popularity.asc">Популярное по возростанию</option>
-                    <option value="vote_average.desc">Рейтинг по убыванию</option>
-                    <option value="vote_average.desc">Рейтинг по возростанию</option>
-                </select>
-            </div>
+           
+            <SortBy
+                sort_by={sort_by}
+                changeFilterHandler={changeFilterHandler}
+            />
+            <PrimaryReleaseYear
+                primary_release_year={primary_release_year}
+                changeFilterHandler={changeFilterHandler}
+            />
+            <Genres 
+                // with_genres={with_genres}
+                onChangeGenre={onChangeGenre}
+            />
 
-
-            <div className="btn-group">
-                <button 
-                    type="button" 
-                    className="btn btn-light"
-                    disabled={page === 1}
-                    onClick={() => onChangePage(page - 1)}
-                >Назад</button>
-                <button 
-                    type="button" 
-                    className="btn btn-light" 
-                    onClick={() => onChangePage(page + 1)}
-                >Вперед</button>
-            </div>
-            <div>
-                Страница: {page}
-            </div>
+            <Pagination
+                page={page}
+                total_pages={total_pages}
+                onChangePage={onChangePage}
+            />
 
         </form>
     )
