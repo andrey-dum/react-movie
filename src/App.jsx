@@ -16,6 +16,7 @@ function App() {
   const [page, setPage] = useState(1);
 
   const [user, setUser] = useState(null)
+  const [sessionId, setSessionId] = useState(null)
 
   const changeFilterHandler = (e) => {
     setFilters({
@@ -34,6 +35,9 @@ function App() {
 
   const updateUser = (userObj) => {
     setUser(userObj)
+  }
+  const updateSessionId = (sessionId) => {
+    setSessionId(sessionId)
   }
 
   const onChangeGenre = e => {
@@ -61,6 +65,7 @@ function App() {
       <Header
         updateUser={updateUser}
         user={user}
+        updateSessionId={updateSessionId}
       />
       <div className="container">
         <div className="row mt-4">

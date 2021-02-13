@@ -2,7 +2,7 @@ import React from 'react'
 import Login from '../Login/Login'
 import User from '../User/User'
 
-export default function Header({updateUser, user}) {
+export default function Header({updateUser, user, updateSessionId}) {
     return (
         <nav className="navbar navbar navbar-dark bg-primary">
             <div className="container">
@@ -14,6 +14,7 @@ export default function Header({updateUser, user}) {
                     :
                     <Login
                         updateUser={updateUser}
+                        updateSessionId={updateSessionId}
                     />
                 }
                 

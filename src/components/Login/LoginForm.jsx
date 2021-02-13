@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { API_KEY_3, API_URL } from '../../api/api'
 
-export default function LoginForm({updateUser, handleClose}) {
+export default function LoginForm({updateUser, handleClose, updateSessionId}) {
     const [userData, setUserData] = useState({
         username: '',
         password: '',
@@ -98,6 +98,7 @@ export default function LoginForm({updateUser, handleClose}) {
                     request_token: response.request_token
                 })  
             })
+            updateSessionId(session_id)
 
             const userInfo = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
             updateUser(userInfo)
