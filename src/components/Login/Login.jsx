@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import LoginForm from './LoginForm';
 import ModalBox from '../UIComponents/ModalBox'
 
-export default function Login() {
+export default function Login({updateUser}) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -63,7 +63,7 @@ export default function Login() {
                 handleClose={handleClose}
                 handleShow={handleShow}
             >
-                <LoginForm />
+                <LoginForm updateUser={updateUser} handleClose={handleClose} />
             </ModalBox>
         </div>
     )

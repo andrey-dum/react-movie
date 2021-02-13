@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { API_KEY_3, API_URL } from '../../api/api'
 
-export default function LoginForm() {
+export default function LoginForm({updateUser, handleClose}) {
     const [userData, setUserData] = useState({
         username: '',
         password: '',
@@ -9,6 +9,7 @@ export default function LoginForm() {
     });
     const [formError, setFormError] = useState({})
     const [loading, setloading] = useState(false)
+    
    
 
     const validateFileds = () => {
@@ -32,6 +33,7 @@ export default function LoginForm() {
                 [e.target.name]: null
             }
         })
+        setFormError({})
     }
     const handleBlur = (e) => {
         const errors = validateFileds()
@@ -97,17 +99,23 @@ export default function LoginForm() {
                 })  
             })
 
-            console.log('session_id', session_id);
+            const userInfo = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
+            updateUser(userInfo)
+            handleClose()
+
+
+            // console.log('session_id', session_id);
             setloading(false)
         } catch (error) {
             setFormError({
                 message: error.status_message
             })
-            console.log('error: ', error)
+            // console.log('error: ', error)
             setloading(false)
         }
     }
-    
+
+  
     const onLogin = (e) => {
         e.preventDefault()
         const errors = validateFileds()

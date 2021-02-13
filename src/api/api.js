@@ -9,6 +9,8 @@ export const API_KEY_4 = "https://api.themoviedb.org/3"
 //     }
 // }
 
+
+
 // export const fetchApi = (url, options = {}) => {
 //     return new Promise((resolve, reject) => {
 //         fetch(url, options)

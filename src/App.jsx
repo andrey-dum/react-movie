@@ -15,6 +15,8 @@ function App() {
   const [filters, setFilters] = useState(filtersData);
   const [page, setPage] = useState(1);
 
+  const [user, setUser] = useState(null)
+
   const changeFilterHandler = (e) => {
     setFilters({
       ...filters, 
@@ -29,6 +31,10 @@ function App() {
   // const setTotalPages = (totalPage) => {
   //   setState(totalPage)
   // }
+
+  const updateUser = (userObj) => {
+    setUser(userObj)
+  }
 
   const onChangeGenre = e => {
     const id = e.target.value
@@ -52,7 +58,10 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header
+        updateUser={updateUser}
+        user={user}
+      />
       <div className="container">
         <div className="row mt-4">
           <div className="col-4">
