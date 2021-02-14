@@ -1,8 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './App.css';
 import Filters from './components/Filters/Filters';
 import Header from './components/Header/Header';
 import MovieList from './components/Movies/MovieList';
+import Cookies from 'universal-cookie'
+import { API_KEY_3, API_URL, fetchApi } from './api/api';
+
+const cookies = new Cookies()
 
 const filtersData = {
   sort_by: 'popularity.desc',
@@ -17,6 +21,21 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [sessionId, setSessionId] = useState(null)
+
+  useEffect(() => {
+    const checkAuth = async (session_id) => {
+      const userObj = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
+      setUser(userObj)
+    }
+
+    const sessId = cookies.get('session_id')
+
+    if(sessId) {
+      checkAuth(sessId)
+    }
+    
+
+  }, []);
 
   const changeFilterHandler = (e) => {
     setFilters({
@@ -36,8 +55,12 @@ function App() {
   const updateUser = (userObj) => {
     setUser(userObj)
   }
-  const updateSessionId = (sessionId) => {
-    setSessionId(sessionId)
+  const updateSessionId = (session_id) => {
+    setSessionId(session_id)
+    cookies.set('session_id', session_id, {
+      path: "/",
+      maxAge: 3600
+    })
   }
 
   const onChangeGenre = e => {

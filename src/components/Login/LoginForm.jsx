@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { API_KEY_3, API_URL } from '../../api/api'
+import { API_KEY_3, API_URL, fetchApi } from '../../api/api'
 
 export default function LoginForm({updateUser, handleClose, updateSessionId}) {
     const [userData, setUserData] = useState({
@@ -47,26 +47,6 @@ export default function LoginForm({updateUser, handleClose, updateSessionId}) {
        
     }
 
-    const fetchApi = (url, options = {}) => {
-        return new Promise((resolve, reject) => {
-            fetch(url, options)
-                .then(res => {
-                    if(res.status < 400) {
-                        return res.json()
-                    } else {
-                        throw res
-                    }
-                })
-                .then(data => {
-                   resolve(data)
-                })
-                .catch(res => {
-                    res.json().then(e => {
-                        reject(e)
-                    })
-                })
-       })
-    }
 
     const login = async () => {
         setloading(true)
@@ -101,12 +81,11 @@ export default function LoginForm({updateUser, handleClose, updateSessionId}) {
             updateSessionId(session_id)
 
             const userInfo = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
-            updateUser(userInfo)
-            handleClose()
-
-
+            
             // console.log('session_id', session_id);
             setloading(false)
+            handleClose()
+            updateUser(userInfo)
         } catch (error) {
             setFormError({
                 message: error.status_message
