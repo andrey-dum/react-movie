@@ -34,7 +34,7 @@ export default function User() {
                 className="btn btn-outline-light" 
                 type="button"
                 style={{marginLeft: 12}}
-                onClick={onLogout}
+                onClick={handleLogout}
             >Выйти</button>
         </div>
     )
