@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import MovieList from './components/Movies/MovieList';
 import Cookies from 'universal-cookie'
 import { API_KEY_3, API_URL, fetchApi } from './api/api';
+import Movies from './components/Movies/Movies';
 
 const cookies = new Cookies()
 
@@ -107,7 +108,7 @@ function App() {
             </div>
           </div>
           <div className="col-8">
-            <MovieList 
+            <Movies 
               filters={filters} 
               page={page}
             />
