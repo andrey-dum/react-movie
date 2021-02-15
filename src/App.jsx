@@ -15,8 +15,10 @@ const filtersData = {
   genres: [],
 }
 
+export const AppContext = React.createContext()
 
 function App() {
+  
   const [filters, setFilters] = useState(filtersData);
   const [page, setPage] = useState(1);
 
@@ -56,6 +58,13 @@ function App() {
   const updateUser = (userObj) => {
     setUser(userObj)
   }
+
+  const onLogout = () => {
+    setSessionId(null)
+    setUser(null)
+    cookies.remove('session_id')
+  }
+  
   const updateSessionId = (session_id) => {
     setSessionId(session_id)
     cookies.set('session_id', session_id, {
@@ -85,6 +94,14 @@ function App() {
 
 
   return (
+    <AppContext.Provider value={{
+      user,
+      updateUser,
+      updateSessionId,
+      onLogout,
+      sessionId
+
+    }}>
     <div className="app">
       <Header
         updateUser={updateUser}
@@ -116,6 +133,7 @@ function App() {
         </div>
       </div>
     </div>
+    </AppContext.Provider>
   );
 }
 

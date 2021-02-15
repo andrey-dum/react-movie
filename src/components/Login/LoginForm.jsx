@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 import { API_KEY_3, API_URL, fetchApi } from '../../api/api'
+import { AppContext } from '../../App';
 
-export default function LoginForm({updateUser, handleClose, updateSessionId}) {
+export default function LoginForm({handleClose, updateSessionId}) {
+    const {updateUser} = React.useContext(AppContext)
+
     const [userData, setUserData] = useState({
         username: '',
         password: '',
