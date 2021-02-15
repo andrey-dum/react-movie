@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { API_KEY_3, API_URL, fetchApi } from '../../api/api'
+import MovieApi, { API_KEY_3, API_URL, fetchApi } from '../../api/api'
 import { AppContext } from '../../App';
 
 export default function LoginForm({handleClose, updateSessionId}) {
@@ -54,38 +54,59 @@ export default function LoginForm({handleClose, updateSessionId}) {
     const login = async () => {
         setloading(true)
         try {
-            const data = await fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+            // const data = await fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+            const data = await MovieApi.get(`/authentication/token/new`)
 
-            const response = await fetchApi(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}` ,
+            // const response = await fetchApi(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}` ,
+            //     {
+            //         method: "POST",
+            //         mode: "cors",
+            //         headers: {
+            //             "Content-type": "application/json"
+            //         },
+            //         body: JSON.stringify({
+            //             username: userData.username,
+            //             password: userData.password,
+            //             request_token: data.request_token
+            //         })
+            // })
+
+            const response = await MovieApi.post(`/authentication/token/validate_with_login` ,
                 {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.stringify({
+                    body: {
                         username: userData.username,
                         password: userData.password,
                         request_token: data.request_token
-                    })
+                    }
             })
 
-            const { session_id } = await fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}` ,
+            // const { session_id } = await fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}` ,
+            // {
+            //     method: "POST",
+            //     mode: "cors",
+            //     headers: {
+            //         "Content-type": "application/json"
+            //     },
+            //     body: JSON.stringify({
+            //         request_token: response.request_token
+            //     })  
+            // })
+            const { session_id } = await MovieApi.post(`/authentication/session/new` ,
             {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify({
+                body: {
                     request_token: response.request_token
-                })  
+                }
             })
             updateSessionId(session_id)
 
-            const userInfo = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
+            // const userInfo = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
+            const userInfo = await MovieApi.get(`/account`, {
+                params: {
+                    session_id: session_id
+                }
+            })
             
-            // console.log('session_id', session_id);
+        
             setloading(false)
             handleClose()
             updateUser(userInfo)
