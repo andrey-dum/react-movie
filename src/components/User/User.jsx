@@ -1,11 +1,26 @@
 import React from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import { API_KEY_3, API_URL, fetchApi } from '../../api/api'
-import { AppContext } from '../../App'
+import Cookies from 'universal-cookie'
+import { logout } from '../../store/auth/actions'
+
+
+
+const cookies = new Cookies()
 
 
 export default function User() {
-    const {user, updateUser, sessionId, onLogout} = React.useContext(AppContext)
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
+    const sessionId = useSelector(state => state.auth.sessionId)
 
+    const onLogout = () => {
+        cookies.remove('session_id')
+        dispatch(logout())
+    }
+
+
+  
     const handleLogout = () => {
         fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
             method: "DELETE",

@@ -2,8 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import Login from '../Login/Login'
 import User from '../User/User'
+import {useSelector} from 'react-redux'
 
-export default function Header({user, updateSessionId}) {
+export default function Header() {
+    const user = useSelector(state => state.auth.user)
+
     return (
         <nav className="navbar navbar navbar-dark bg-primary">
             <div className="container">
@@ -12,10 +15,8 @@ export default function Header({user, updateSessionId}) {
                     <User />
                     :
                     <Login
-                        updateSessionId={updateSessionId}
                     />
                 }
-                
             </div>
         </nav>
     )
