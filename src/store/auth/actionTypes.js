@@ -2,3 +2,8 @@ export const UPDATE_AUTH = "UPDATE_AUTH"
 export const UPDATE_USER = "UPDATE_USER"
 export const LOGOUT = "LOGOUT"
 
+
+
+export const FETCH_AUTH_START = "FETCH_AUTH_START"
+export const FETCH_AUTH_SUCCESS = "FETCH_AUTH_SUCCESS"
+

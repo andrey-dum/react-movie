@@ -1,12 +1,13 @@
-import MovieApi from "../../api/api"
+import MovieApi, { API_KEY_3, API_URL, fetchApi } from "../../api/api"
 import * as authTypes from "./actionTypes"
+import {cookies} from '../../utils/cookies'
 
-import Cookies from 'universal-cookie'
 
-const cookies = new Cookies()
 
 
 export const updateAuth = (payload) => ({type: authTypes.UPDATE_AUTH, payload})  
+// export const autoAuth = (payload) => ({type: authTypes.AUTO_AUTH, payload})  
+
 export const logout = () => ({type: authTypes.LOGOUT})
 
 
@@ -32,3 +33,24 @@ export const getUser = (session_id) => {
 
     }
 }
+
+
+export const onLogout = (session_id) => {
+    return async dispatch => {
+        fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
+            method: "DELETE",
+            mode: "cors",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                session_id: session_id
+            })
+        }).then(() => {
+            cookies.remove('session_id')
+            dispatch(logout())
+        })
+
+    }
+}
+

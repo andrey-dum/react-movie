@@ -8,31 +8,32 @@ import {useActions} from '../../hooks/useActions'
 import MovieList from './MovieList';
 
 const Movies = ({filters, page}) => {
-    // const [movies, setMovies] = useState([]);
-    // const dispatch = useDispatch()
-    const { fetchMoviesSuccess } = useActions()
+    const { fetchMovies } = useActions()
     const movies = useSelector(state => state.movies.movies)
 
     useEffect(() => {
-      const queryStringParams = {
-        page: page,
-        language: "ru-RU",
-        sort_by: filters.sort_by,
-        primary_release_year: filters.primary_release_year,
-      }
-      if(filters.genres.length > 0) {
-        queryStringParams.with_genres = filters.genres.join(',')
-      }
+      // const queryStringParams = {
+      //   page: page,
+      //   language: "ru-RU",
+      //   sort_by: filters.sort_by,
+      //   primary_release_year: filters.primary_release_year,
+      // }
+      // if(filters.genres.length > 0) {
+      //   queryStringParams.with_genres = filters.genres.join(',')
+      // }
 
-        MovieApi.get("/discover/movie", { params: queryStringParams }).then((data) => {
-        // dispatch(fetchMoviesSuccess(data.results))
-        fetchMoviesSuccess(data.results)
+      //   MovieApi.get("/discover/movie", { params: queryStringParams }).then((data) => {
+      //   fetchMoviesSuccess(data.results)
 
-        //setTotalPages
-        //onChangePagination
-        //setPage
-      })
+      //   //setTotalPages
+      //   //onChangePagination
+      //   //setPage
+      // })
+
+      fetchMovies(filters, page)
     }, [filters, page]);
+
+
 
     if(movies.length === 0) {
       return <Preloader />

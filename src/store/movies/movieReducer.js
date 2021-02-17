@@ -6,7 +6,13 @@ const initialState = {
     page: 1,
     total_page: 100,
     loading: false,
-    error: null
+    error: null,
+    genres: [],
+    filters: {
+        sort_by: 'popularity.desc',
+        primary_release_year: '2021',
+        genres: [],
+    }
 }
 
 export default function movieReducer(state = initialState, action) {
@@ -27,6 +33,24 @@ export default function movieReducer(state = initialState, action) {
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+        case movieTypes.FETCH_GENRES:
+            return {
+                ...state,
+                genres: action.payload
+            }
+
+
+        case movieTypes.CHANGE_FILTERS:
+            return {
+                ...state,
+                filters: {...state.filters, ...action.payload},
+                page: 1
+            }
+        case movieTypes.ON_CHANGE_PAGE:
+            return {
+                ...state,
+                page: action.payload
             }
 
         default:

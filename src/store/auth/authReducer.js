@@ -13,10 +13,16 @@ export default function appReducer(state = initialState, action) {
         case authTypes.UPDATE_USER:
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.user,
+                sessionId: action.payload.sessionId,
                 isAuth: true
 
             }
+        // case authTypes.FETCH_AUTH_START:
+        //     return {
+        //         ...state,
+    
+        //     }
         case authTypes.UPDATE_AUTH:
             return {
                 ...state,
@@ -33,7 +39,6 @@ export default function appReducer(state = initialState, action) {
                 isAuth: false
             }
        
-        
 
         default:
             return state

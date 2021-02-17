@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { API_KEY_3, API_URL } from '../../api/api';
+import { useActions } from '../../hooks/useActions';
 
 export default function Genres({onChangeGenre}) {
-    const [genres, setGenres] = useState([]);
+    // const [genres, setGenres] = useState([]);
+    const genres = useSelector(state => state.movies.genres)
+    const { fetchGenres } = useActions()
+    
 
     useEffect(() => {
-      const url = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-Ru`
-      fetch(url).then(res => res.json()).then(data => setGenres(data.genres))
-        
+    //   const url = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`
+    //   fetch(url).then(res => res.json()).then(data => setGenres(data.genres))
+    fetchGenres()
     }, []);
 
     return (

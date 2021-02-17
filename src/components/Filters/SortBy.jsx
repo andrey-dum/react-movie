@@ -25,10 +25,6 @@ export default function SortBy({sort_by, changeFilterHandler}) {
                         value={optn.value}
                     >{optn.label}</option>
                 ))}
-                {/* <option value="popularity.desc">Популярное по убыванию</option>
-                <option value="popularity.asc">Популярное по возростанию</option>
-                <option value="vote_average.desc">Рейтинг по убыванию</option>
-                <option value="vote_average.desc">Рейтинг по возростанию</option> */}
             </select>
         </div>
     )

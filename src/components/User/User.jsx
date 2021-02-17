@@ -1,39 +1,18 @@
 import React from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import { API_KEY_3, API_URL, fetchApi } from '../../api/api'
-import Cookies from 'universal-cookie'
-import { logout } from '../../store/auth/actions'
+import {useSelector} from 'react-redux'
+import { useActions } from '../../hooks/useActions'
 
-
-
-const cookies = new Cookies()
 
 
 export default function User() {
-    const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
     const sessionId = useSelector(state => state.auth.sessionId)
 
-    const onLogout = () => {
-        cookies.remove('session_id')
-        dispatch(logout())
-    }
-
+    const {onLogout} = useActions()
 
   
     const handleLogout = () => {
-        fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
-            method: "DELETE",
-            mode: "cors",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                session_id: sessionId
-            })
-        }).then(() => {
-            onLogout()
-        })
+        onLogout(sessionId)
     }
 
     return (

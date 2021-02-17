@@ -2,12 +2,12 @@ import React, {useEffect} from 'react'
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 import Header from './components/Header/Header';
-import Cookies from 'universal-cookie'
+import {cookies} from './utils/cookies'
 import MoviesPage from './pages/MoviesPage';
 import MoviePage from './pages/MoviePage';
 import { useActions } from './hooks/useActions';
 
-const cookies = new Cookies()
+
 
 
 

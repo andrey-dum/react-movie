@@ -1,35 +1,27 @@
 import React, {useState} from 'react'
+import {useSelector} from 'react-redux'
 import Filters from '../components/Filters/Filters';
 import Movies from '../components/Movies/Movies';
+import { useActions } from '../hooks/useActions';
 
 
-const filtersData = {
-  sort_by: 'popularity.desc',
-  primary_release_year: '2021',
-  genres: [],
-}
 
 
 function MoviesPage() {
   
-  const [filters, setFilters] = useState(filtersData);
-  const [page, setPage] = useState(1);
-
+  const filters = useSelector(state => state.movies.filters)
+  const page = useSelector(state => state.movies.page)
+  const {changeFilters, changePage} = useActions()
 
   const changeFilterHandler = (e) => {
-    setFilters({
-      ...filters, 
+    changeFilters({
       [e.target.name]: e.target.value 
     })
-    setPage(1)
   }
 
   const onChangePage = (page) => {
-    setPage(page)
+    changePage(page)
   }
-  // const setTotalPages = (totalPage) => {
-  //   setTotalPage(totalPage)
-  // }
 
 
   const onChangeGenre = e => {
@@ -42,11 +34,11 @@ function MoviesPage() {
     } else {
       newGenres = [...genres, id]
     }
-
-    setFilters({
-      ...filters,
+    
+    changeFilters({
       genres: newGenres
     })
+    console.log(newGenres);
 
   }
 
